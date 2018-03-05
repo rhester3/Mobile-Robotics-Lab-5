@@ -3,9 +3,9 @@ Archive member included to satisfy reference by file (symbol)
 ../../../../../CEENbot_Library\libcapi324v22x.a(CBOT_main.o)
                               C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega324p/avr5/crtatmega324p.o (main)
 ../../../../../CEENbot_Library\libcapi324v22x.a(LCD_clear.o)
-                              main.o (LCD_clear)
+                              LightFollow.o (LCD_clear)
 ../../../../../CEENbot_Library\libcapi324v22x.a(LCD_open.o)
-                              main.o (LCD_open)
+                              LightFollow.o (LCD_open)
 ../../../../../CEENbot_Library\libcapi324v22x.a(LCD_set_PGC_addr.o)
                               ../../../../../CEENbot_Library\libcapi324v22x.a(LCD_clear.o) (LCD_set_PGC_addr)
 ../../../../../CEENbot_Library\libcapi324v22x.a(LCD_set_backlight.o)
@@ -17,9 +17,9 @@ Archive member included to satisfy reference by file (symbol)
 ../../../../../CEENbot_Library\libcapi324v22x.a(__LCD_init.o)
                               ../../../../../CEENbot_Library\libcapi324v22x.a(LCD_open.o) (__LCD_init)
 ../../../../../CEENbot_Library\libcapi324v22x.a(LED_open.o)
-                              main.o (LED_open)
+                              LightFollow.o (LED_open)
 ../../../../../CEENbot_Library\libcapi324v22x.a(LED_tog_pattern.o)
-                              main.o (LED_tog_pattern)
+                              LightFollow.o (LED_tog_pattern)
 ../../../../../CEENbot_Library\libcapi324v22x.a(__LED_init.o)
                               ../../../../../CEENbot_Library\libcapi324v22x.a(LED_open.o) (__LED_init)
 ../../../../../CEENbot_Library\libcapi324v22x.a(__LED_tog_pattern.o)
@@ -35,19 +35,19 @@ Archive member included to satisfy reference by file (symbol)
 ../../../../../CEENbot_Library\libcapi324v22x.a(__SPI_init.o)
                               ../../../../../CEENbot_Library\libcapi324v22x.a(SPI_open.o) (__SPI_init)
 ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_move.o)
-                              main.o (STEPPER_move)
+                              LightFollow.o (STEPPER_move)
 ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_open.o)
-                              main.o (STEPPER_open)
+                              LightFollow.o (STEPPER_open)
 ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_run.o)
                               ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_move.o) (STEPPER_run)
 ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_run2.o)
                               ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_move.o) (STEPPER_run2)
 ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_runn.o)
-                              main.o (STEPPER_runn)
+                              LightFollow.o (STEPPER_runn)
 ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_set_accel.o)
                               ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_move.o) (STEPPER_set_accel)
 ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_set_accel2.o)
-                              main.o (STEPPER_set_accel2)
+                              LightFollow.o (STEPPER_set_accel2)
 ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_set_dir.o)
                               ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_run.o) (STEPPER_set_dir)
 ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_set_dir2.o)
@@ -63,7 +63,7 @@ Archive member included to satisfy reference by file (symbol)
 ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_step2.o)
                               ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_move.o) (STEPPER_step2)
 ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_stop.o)
-                              main.o (STEPPER_stop)
+                              LightFollow.o (STEPPER_stop)
 ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_wait_and_then.o)
                               ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_move.o) (STEPPER_wait_and_then)
 ../../../../../CEENbot_Library\libcapi324v22x.a(__STEPPER_init.o)
@@ -77,7 +77,7 @@ Archive member included to satisfy reference by file (symbol)
 ../../../../../CEENbot_Library\libcapi324v22x.a(SYS_isOpen.o)
                               ../../../../../CEENbot_Library\libcapi324v22x.a(LCD_clear.o) (SYS_isOpen)
 ../../../../../CEENbot_Library\libcapi324v22x.a(ATTINY_get_IR_state.o)
-                              main.o (ATTINY_get_IR_state)
+                              LightFollow.o (ATTINY_get_IR_state)
 ../../../../../CEENbot_Library\libcapi324v22x.a(ATTINY_get_sensors.o)
                               ../../../../../CEENbot_Library\libcapi324v22x.a(ATTINY_get_IR_state.o) (ATTINY_get_sensors)
 ../../../../../CEENbot_Library\libcapi324v22x.a(ATTINY_open.o)
@@ -85,9 +85,9 @@ Archive member included to satisfy reference by file (symbol)
 ../../../../../CEENbot_Library\libcapi324v22x.a(__ATTINY_initialize_params.o)
                               ../../../../../CEENbot_Library\libcapi324v22x.a(ATTINY_open.o) (__ATTINY_initialize_params)
 ../../../../../CEENbot_Library\libcapi324v22x.a(TMRSRVC_delay.o)
-                              main.o (TMRSRVC_delay)
+                              LightFollow.o (TMRSRVC_delay)
 ../../../../../CEENbot_Library\libcapi324v22x.a(TMRSRVC_new.o)
-                              main.o (TMRSRVC_new)
+                              LightFollow.o (TMRSRVC_new)
 ../../../../../CEENbot_Library\libcapi324v22x.a(__TMRSRVC_insert.o)
                               ../../../../../CEENbot_Library\libcapi324v22x.a(TMRSRVC_new.o) (TMRSRVC_insert)
 ../../../../../CEENbot_Library\libcapi324v22x.a(CBOT_init.o)
@@ -249,9 +249,9 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
                               C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega324p/avr5/crtatmega324p.o (exit)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_copy_data.o)
-                              main.o (__do_copy_data)
+                              LightFollow.o (__do_copy_data)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_clear_bss.o)
-                              main.o (__do_clear_bss)
+                              LightFollow.o (__do_clear_bss)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muluhisi3.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_mulsi3.o) (__muluhisi3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_prologue.o)
@@ -273,7 +273,7 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(iob.o)
                               ../../../../../CEENbot_Library\libcapi324v22x.a(LCD_open.o) (__iob)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(puts.o)
-                              main.o (puts)
+                              LightFollow.o (puts)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libprintf_flt.a(vfprintf_flt.o) (__ultoa_invert)
 
@@ -286,7 +286,7 @@ __brkval            0x2               c:/program files (x86)/atmel/studio/7.0/to
 ATTINY_params       0x1e              ../../../../../CEENbot_Library\libcapi324v22x.a(ATTINY_globals.o)
 tmrNodes            0x3               ../../../../../CEENbot_Library\libcapi324v22x.a(TMRSRVC_globals.o)
 STEPPER_params      0x37              ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_globals.o)
-action              0x9               main.o
+action              0x9               LightFollow.o
 curr_spi_addr       0x1               ../../../../../CEENbot_Library\libcapi324v22x.a(SPI_globals.o)
 LCD_params          0x5               ../../../../../CEENbot_Library\libcapi324v22x.a(LCD_globals.o)
 __flp               0x2               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
@@ -297,9 +297,9 @@ Discarded input sections
 
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega324p/avr5/crtatmega324p.o
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega324p/avr5/crtatmega324p.o
- .text          0x00000000        0x0 main.o
- .data          0x00000000        0x0 main.o
- .bss           0x00000000        0x0 main.o
+ .text          0x00000000        0x0 LightFollow.o
+ .data          0x00000000        0x0 LightFollow.o
+ .bss           0x00000000        0x0 LightFollow.o
  .data          0x00000000        0x0 ../../../../../CEENbot_Library\libcapi324v22x.a(CBOT_main.o)
  .bss           0x00000000        0x0 ../../../../../CEENbot_Library\libcapi324v22x.a(CBOT_main.o)
  .data          0x00000000        0x0 ../../../../../CEENbot_Library\libcapi324v22x.a(LCD_clear.o)
@@ -734,7 +734,7 @@ Linker script and memory map
 
 Address of section .data set to 0x800100
 LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega324p/avr5/crtatmega324p.o
-LOAD main.o
+LOAD LightFollow.o
 START GROUP
 LOAD ../../../../../CEENbot_Library\libcapi324v22x.a
 LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libprintf_flt.a
@@ -1134,23 +1134,23 @@ END GROUP
                 0x00002c80                . = ALIGN (0x2)
  *(.text.*)
  .text.info_display
-                0x00002c80       0x48 main.o
+                0x00002c80       0x48 LightFollow.o
                 0x00002c80                info_display
  .text.compare_actions
-                0x00002cc8       0x6a main.o
+                0x00002cc8       0x6a LightFollow.o
                 0x00002cc8                compare_actions
  .text.IR_sense
-                0x00002d32       0x4c main.o
+                0x00002d32       0x4c LightFollow.o
                 0x00002d32                IR_sense
- .text.explore  0x00002d7e       0x20 main.o
+ .text.explore  0x00002d7e       0x20 LightFollow.o
                 0x00002d7e                explore
  .text.IR_avoid
-                0x00002d9e       0xfa main.o
+                0x00002d9e       0xfa LightFollow.o
                 0x00002d9e                IR_avoid
- .text.act      0x00002e98       0x40 main.o
+ .text.act      0x00002e98       0x40 LightFollow.o
                 0x00002e98                act
  .text.CBOT_main
-                0x00002ed8       0x74 main.o
+                0x00002ed8       0x74 LightFollow.o
                 0x00002ed8                CBOT_main
  .text.avr-libc
                 0x00002f4c      0x6fa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libprintf_flt.a(vfprintf_flt.o)
@@ -1317,7 +1317,7 @@ END GROUP
  *(.rodata)
  *(.rodata*)
  .rodata.str1.1
-                0x00800120       0x28 main.o
+                0x00800120       0x28 LightFollow.o
  *(.gnu.linkonce.r*)
                 0x00800148                . = ALIGN (0x2)
                 0x00800148                _edata = .
@@ -1348,15 +1348,15 @@ END GROUP
  .bss           0x008001ba        0x4 ../../../../../CEENbot_Library\libcapi324v22x.a(STEPPER_process_pwm.o)
  *(.bss*)
  .bss.previous_action.3767
-                0x008001be        0x9 main.o
+                0x008001be        0x9 LightFollow.o
  .bss.sense_timer.3756
-                0x008001c7        0x9 main.o
+                0x008001c7        0x9 LightFollow.o
  .bss.timer_started.3755
-                0x008001d0        0x1 main.o
+                0x008001d0        0x1 LightFollow.o
  .bss.previous_state.3740
-                0x008001d1        0x1 main.o
+                0x008001d1        0x1 LightFollow.o
  *(COMMON)
- COMMON         0x008001d2        0x9 main.o
+ COMMON         0x008001d2        0x9 LightFollow.o
                 0x008001d2                action
  COMMON         0x008001db       0x15 ../../../../../CEENbot_Library\libcapi324v22x.a(SYS_globals.o)
                 0x008001db                CBOT_SYSTEM_refcount
@@ -1426,7 +1426,7 @@ END GROUP
 
 .comment        0x00000000       0x5c
  *(.comment)
- .comment       0x00000000       0x30 main.o
+ .comment       0x00000000       0x30 LightFollow.o
                                  0x31 (size before relaxing)
  .comment       0x00000030       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libprintf_flt.a(vfprintf_flt.o)
                                  0x2d (size before relaxing)
@@ -1458,7 +1458,7 @@ END GROUP
 .debug_aranges  0x00000000       0x50
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x50 main.o
+                0x00000000       0x50 LightFollow.o
 
 .debug_pubnames
  *(.debug_pubnames)
@@ -1466,31 +1466,31 @@ END GROUP
 .debug_info     0x00000000      0xdec
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x6cc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega324p/avr5/crtatmega324p.o
- .debug_info    0x000006cc      0x720 main.o
+ .debug_info    0x000006cc      0x720 LightFollow.o
 
 .debug_abbrev   0x00000000      0x8a8
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x66e C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega324p/avr5/crtatmega324p.o
- .debug_abbrev  0x0000066e      0x23a main.o
+ .debug_abbrev  0x0000066e      0x23a LightFollow.o
 
-.debug_line     0x00000000      0x423
+.debug_line     0x00000000      0x42a
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x151 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega324p/avr5/crtatmega324p.o
- .debug_line    0x00000151      0x2d2 main.o
+ .debug_line    0x00000151      0x2d9 LightFollow.o
 
 .debug_frame    0x00000000      0x13c
  *(.debug_frame)
- .debug_frame   0x00000000      0x13c main.o
+ .debug_frame   0x00000000      0x13c LightFollow.o
 
-.debug_str      0x00000000      0x790
+.debug_str      0x00000000      0x797
  *(.debug_str)
  .debug_str     0x00000000      0x255 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega324p/avr5/crtatmega324p.o
- .debug_str     0x00000255      0x53b main.o
-                                0x586 (size before relaxing)
+ .debug_str     0x00000255      0x542 LightFollow.o
+                                0x58d (size before relaxing)
 
 .debug_loc      0x00000000      0x47f
  *(.debug_loc)
- .debug_loc     0x00000000      0x47f main.o
+ .debug_loc     0x00000000      0x47f LightFollow.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1512,7 +1512,7 @@ END GROUP
 
 .debug_ranges   0x00000000       0x40
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x40 main.o
+ .debug_ranges  0x00000000       0x40 LightFollow.o
 
 .debug_macro
  *(.debug_macro)
