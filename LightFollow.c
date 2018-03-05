@@ -1,8 +1,9 @@
 /* Auth: Riley Hester
  * File: LightFollow.c
  * Course: CEEN-3450 – Mobile Robotics I – University of Nebraska-Lincoln
- * Lab:  
- * Desc: 
+ * Lab:  Lab 5
+ * Desc: This program makes the CEENBoT explore its environment while seeking
+ *			a source of light and avoiding obstacles
  */
 
 /* Behavior-Based Control Skeleton code.
