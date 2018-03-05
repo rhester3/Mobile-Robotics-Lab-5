@@ -87,7 +87,8 @@ do {                                  \
 
 			STARTUP = 0,    // 'Startup' state -- initial state upon RESET.
 			EXPLORING,      // 'Exploring' state -- the robot is 'roaming around'.
-			AVOIDING        // 'Avoiding' state -- the robot is avoiding a collision.
+			AVOIDING,       // 'Avoiding' state -- the robot is avoiding a collision.
+			FOLLOWING		// 'FOLLOWING' state -- the robot is following a light source.
 
 		} ROBOT_STATE;
 
@@ -115,6 +116,8 @@ do {                                  \
 			BOOL right_IR;      // Holds the state of the right IR.
 
 			// *** Add your -own- parameters here.
+			ADC_SAMPLE left_light;		// Holds sample of left light sensor
+			ADC_SAMPLE right_light;	// Holds sample of right light sensor
 
 		} SENSOR_DATA;
 
@@ -126,8 +129,10 @@ do {                                  \
 
 		// ---------------------- Prototypes:
 		void IR_sense( volatile SENSOR_DATA *pSensors, TIMER16 interval_ms );
+		void photo_sense( volatile SENSOR_DATA *pSensors, TIMER16 interval_ms );
 		void explore( volatile MOTOR_ACTION *pAction );
 		void IR_avoid( volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pSensors );
+		void light_follow( volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pSensors );
 		void act( volatile MOTOR_ACTION *pAction );
 		void info_display( volatile MOTOR_ACTION *pAction );
 		BOOL compare_actions( volatile MOTOR_ACTION *a, volatile MOTOR_ACTION *b );
@@ -271,9 +276,77 @@ do {                                  \
 
 		} // end sense()
 		// -------------------------------------------- //
+		void photo_sense( volatile SENSOR_DATA *pSensors, TIMER16 interval_ms )
+		{
+
+			// Sense must know if it's already sensing.
+			//
+			// NOTE: 'BOOL' is a custom data type offered by the CEENBoT API.
+			//
+			static BOOL timer_started = FALSE;
+			
+			// The 'sense' timer is used to control how often gathering sensor
+			// data takes place.  The pace at which this happens needs to be
+			// controlled.  So we're forced to use TIMER OBJECTS along with the
+			// TIMER SERVICE.  It must be 'static' because the timer object must remain
+			// 'alive' even when it is out of scope -- otherwise the program will crash.
+			static TIMEROBJ photo_timer;
+			
+			// If this is the FIRST time that sense() is running, we need to start the
+			// sense timer.  We do this ONLY ONCE!
+			if ( timer_started == FALSE )
+			{
+				
+				// Start the 'sense timer' to tick on every 'interval_ms'.
+				//
+				// NOTE:  You can adjust the delay value to suit your needs.
+				//
+				TMRSRVC_new( &photo_timer, TMRFLG_NOTIFY_FLAG, TMRTCM_RESTART,
+				interval_ms );
+				
+				// Mark that the timer has already been started.
+				timer_started = TRUE;
+				
+			} // end if()
+			
+			// Otherwise, just do the usual thing and just 'sense'.
+			else
+			{
+
+				// Only read the sensors when it is time to do so (e.g., every
+				// 125ms).  Otherwise, do nothing.
+				if ( TIMER_ALARM( photo_timer ) )
+				{
+
+					// NOTE: Just as a 'debugging' feature, let's also toggle the green LED
+					//       to know that this is working for sure.  The LED will only
+					//       toggle when 'it's time'.
+					LED_toggle( LED_Green );
+
+
+					// Read the left and right sensors, and store this
+					// data in the 'SENSOR_DATA' structure.
+					
+					ADC_set_channel( ADC_CHAN3 );			// Set to channel of left sensor
+					DELAY_ms( 10 );
+					pSensors->left_light = (ADC_sample() * (5.0 / 1024));
+					ADC_set_channel( ADC_CHAN4 );			// Set to channel of right sensor
+					DELAY_ms( 10 );
+					pSensors->right_light = (ADC_sample() * (5.0 / 1024));
+
+					// NOTE: You can add more stuff to 'sense' here.
+					
+					// Snooze the alarm so it can trigger again.
+					TIMER_SNOOZE( photo_timer );
+					
+				} // end if()
+
+			} // end else.
+
+		} // end sense()
+		// -------------------------------------------- //
 		void explore( volatile MOTOR_ACTION *pAction )
 		{
-			
 			// Nothing to do, but set the parameters to explore.  'act()' will do
 			// the rest down the line.
 			pAction->state = EXPLORING;
@@ -353,7 +426,38 @@ do {                                  \
 				
 			} // end if()
 		} // end avoid()
+		light_follow( volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pSensors )
+		{
+			if( (pSensors->left_light + pSensors->right_light) / 2 >= 0.5 )
+			{
+				// Note that we are FOLLOWING
+				pAction->state = FOLLOWING;
+				
+				// If more light received by left sensor...
+				if( pSensors->left_light > pSensors->right_light )
+				{
+					// ... Speed up Right Motor
+					pAction->speed_L = 200;
+					pAction->speed_R = 250;
+				}
+				// If more light received by right sensor...
+				else if( pSensors->left_light < pSensors->right_light )
+				{
+					// ... Speed up Left Motor
+					pAction->speed_L = 250;
+					pAction->speed_R = 200;
+				}
+				// If equal light received by both sensors...
+				else
+				{
+					// ... Set both motors equal
+					pAction->speed_L = 200;
+					pAction->speed_R = 200;
+				}
+			} // end if()
+		}
 		// -------------------------------------------- //
+		
 		void act( volatile MOTOR_ACTION *pAction )
 		{
 
@@ -389,6 +493,7 @@ do {                                  \
 			// ** Open the needed modules.
 			LED_open();     // Open the LED subsystem module.
 			LCD_open();     // Open the LCD subsystem module.
+			ADC_open();		// Open ADC Module
 			STEPPER_open(); // Open the STEPPER subsyste module.
 			
 			// Reset the current motor action.
@@ -421,6 +526,9 @@ do {                                  \
 				// Note that 'avoidance' relies on sensor data to determine
 				// whether or not 'avoidance' is necessary.
 				IR_avoid( &action, &sensor_data );
+				
+				//
+				light_follow( &action, &sensor_data );
 				
 				// Perform the action of highest priority.
 				act( &action );
