@@ -323,7 +323,35 @@ do {                                  \
 				pAction->accel_R = 400;
 				
 			} // end if()
-			
+			// If the RIGHT sensor tripped...
+			else if( pSensors->right_IR == TRUE )
+			{
+
+				// Note that we're avoiding...
+				pAction->state = AVOIDING;
+
+				// STOP!
+				STEPPER_stop( STEPPER_BOTH, STEPPER_BRK_OFF );
+				
+				// Back up...
+				STEPPER_move_stwt( STEPPER_BOTH,
+				STEPPER_REV, 150, 200, 400, STEPPER_BRK_OFF,
+				STEPPER_REV, 150, 200, 400, STEPPER_BRK_OFF );
+				
+				// ... and turn LEFT ~90-deg.
+				STEPPER_move_stwt( STEPPER_BOTH,
+				STEPPER_REV, DEG_90, 200, 400, STEPPER_BRK_OFF,
+				STEPPER_FWD, DEG_90, 200, 400, STEPPER_BRK_OFF );
+
+				// ... and set the motor action structure with variables to move forward.
+
+				pAction->state = AVOIDING;
+				pAction->speed_L = 200;
+				pAction->speed_R = 200;
+				pAction->accel_L = 400;
+				pAction->accel_R = 400;
+				
+			} // end if()
 		} // end avoid()
 		// -------------------------------------------- //
 		void act( volatile MOTOR_ACTION *pAction )
