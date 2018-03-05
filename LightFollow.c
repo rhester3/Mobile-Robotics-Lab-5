@@ -1,5 +1,5 @@
 /* Auth: Riley Hester
- * File: 
+ * File: LightFollow.c
  * Course: CEEN-3450 – Mobile Robotics I – University of Nebraska-Lincoln
  * Lab:  
  * Desc: 
