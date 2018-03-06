@@ -385,8 +385,35 @@ do {                                  \
 			
 			// Example of ONE case (you can expand on this idea):
 			
+			// If BOTH sensors tripped...
+			if ( pSensors->right_IR == TRUE && pSensors->left_IR == TRUE )
+			{
+				// Note that we're avoiding...
+				pAction->state = AVOIDING;
+
+				// STOP!
+				STEPPER_stop( STEPPER_BOTH, STEPPER_BRK_OFF );
+				
+				// Back up...
+				STEPPER_move_stwt( STEPPER_BOTH,
+				STEPPER_REV, 150, 200, 400, STEPPER_BRK_OFF,
+				STEPPER_REV, 150, 200, 400, STEPPER_BRK_OFF );
+				
+				// ... and turn LEFT ~180-deg.
+				STEPPER_move_stwt( STEPPER_BOTH,
+				STEPPER_REV, 2*DEG_90, 200, 400, STEPPER_BRK_OFF,
+				STEPPER_FWD, 2*DEG_90, 200, 400, STEPPER_BRK_OFF );
+
+				// ... and set the motor action structure with variables to move forward.
+
+				pAction->speed_L = 200;
+				pAction->speed_R = 200;
+				pAction->accel_L = 400;
+				pAction->accel_R = 400;
+			} // end if()
+			
 			// If the LEFT sensor tripped...
-			if( pSensors->left_IR == TRUE )
+			else if( pSensors->left_IR == TRUE )
 			{
 
 				// Note that we're avoiding...
@@ -414,6 +441,7 @@ do {                                  \
 				pAction->accel_R = 400;
 				
 			} // end if()
+			
 			// If the RIGHT sensor tripped...
 			else if( pSensors->right_IR == TRUE )
 			{
