@@ -51,7 +51,7 @@
 
 // ---------------------- Defines:
 
-#define DEG_90  150     /* Number of steps for a 90-degree (in place) turn. */
+#define DEG_90  125     /* Number of steps for a 90-degree (in place) turn. */
 
 
 // Desc: This macro-function can be used to reset a motor-action structure
@@ -88,7 +88,8 @@ do {                                  \
 			STARTUP = 0,    // 'Startup' state -- initial state upon RESET.
 			EXPLORING,      // 'Exploring' state -- the robot is 'roaming around'.
 			AVOIDING,       // 'Avoiding' state -- the robot is avoiding a collision.
-			FOLLOWING		// 'FOLLOWING' state -- the robot is following a light source.
+			FOLLOWING,		// 'FOLLOWING' state -- the robot is following a light source.
+			OBSERVING		// 'OBSERVING' state -- the robot is very close to a light source.
 
 		} ROBOT_STATE;
 
@@ -116,8 +117,10 @@ do {                                  \
 			BOOL right_IR;      // Holds the state of the right IR.
 
 			// *** Add your -own- parameters here.
-			ADC_SAMPLE left_light;		// Holds sample of left light sensor
-			ADC_SAMPLE right_light;	// Holds sample of right light sensor
+			ADC_SAMPLE sample;
+			
+			float left_light;
+			float right_light;
 
 		} SENSOR_DATA;
 
@@ -133,12 +136,13 @@ do {                                  \
 		void explore( volatile MOTOR_ACTION *pAction );
 		void IR_avoid( volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pSensors );
 		void light_follow( volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pSensors );
+		void light_observe( volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pSensors );
 		void act( volatile MOTOR_ACTION *pAction );
-		void info_display( volatile MOTOR_ACTION *pAction );
+		void info_display( volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pSensors );
 		BOOL compare_actions( volatile MOTOR_ACTION *a, volatile MOTOR_ACTION *b );
 
 		// ---------------------- Convenience Functions:
-		void info_display( volatile MOTOR_ACTION *pAction )
+		void info_display( volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pSensors )
 		{
 
 			// NOTE:  We keep track of the 'previous' state to prevent the LCD
@@ -170,8 +174,20 @@ do {                                  \
 
 					case AVOIDING:
 
-					// Fill me in.
+					LCD_printf( "Avoiding...\n" );
 
+					break;
+					
+					case FOLLOWING:
+
+					LCD_printf( "Following...\n" );
+
+					break;
+					
+					case OBSERVING:
+					
+					LCD_printf( "OBSERVING...\n" );
+					
 					break;
 
 					default:
@@ -321,7 +337,7 @@ do {                                  \
 					// NOTE: Just as a 'debugging' feature, let's also toggle the green LED
 					//       to know that this is working for sure.  The LED will only
 					//       toggle when 'it's time'.
-					LED_toggle( LED_Green );
+					LED_toggle( LED_Red );
 
 
 					// Read the left and right sensors, and store this
@@ -329,10 +345,12 @@ do {                                  \
 					
 					ADC_set_channel( ADC_CHAN3 );			// Set to channel of left sensor
 					DELAY_ms( 10 );
-					pSensors->left_light = (ADC_sample() * (5.0 / 1024));
+					pSensors->sample = ADC_sample();
+					pSensors->left_light = ( pSensors->sample * ( 5.0 / 1024 ));
 					ADC_set_channel( ADC_CHAN4 );			// Set to channel of right sensor
 					DELAY_ms( 10 );
-					pSensors->right_light = (ADC_sample() * (5.0 / 1024));
+					pSensors->sample = ADC_sample();
+					pSensors->right_light = ( pSensors->sample * ( 5.0 / 1024 ));
 
 					// NOTE: You can add more stuff to 'sense' here.
 					
@@ -426,38 +444,95 @@ do {                                  \
 				
 			} // end if()
 		} // end avoid()
-		light_follow( volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pSensors )
+		void light_follow( volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pSensors )
 		{
-			if( (pSensors->left_light + pSensors->right_light) / 2 >= 0.5 )
+			float difference;
+			float abs_diff;
+			
+			if( (pSensors->left_light + pSensors->right_light) / 2 >= 0.75 )
 			{
 				// Note that we are FOLLOWING
 				pAction->state = FOLLOWING;
+				difference = pSensors->left_light - pSensors->right_light;
+				abs_diff = abs( difference );
+				LCD_printf_RC( 2, 0, "Left: %.2f", pSensors->left_light );
+				LCD_printf_RC( 1, 0, "Right: %.2f", pSensors->right_light );
+				LCD_printf_RC( 0, 0, "Diff: %.2f", difference );
+				DELAY_ms(10);
 				
-				// If more light received by left sensor...
-				if( pSensors->left_light > pSensors->right_light )
+				/*if ( difference > 0 )
 				{
-					// ... Speed up Right Motor
-					pAction->speed_L = 200;
-					pAction->speed_R = 250;
+					pAction->speed_L = 200 - ( 200 * ( gain / 5.0 ) );
+					pAction->speed_R = 200 + ( 500 * ( gain / 5.0 ) );
 				}
-				// If more light received by right sensor...
-				else if( pSensors->left_light < pSensors->right_light )
-				{
-					// ... Speed up Left Motor
-					pAction->speed_L = 250;
-					pAction->speed_R = 200;
-				}
-				// If equal light received by both sensors...
 				else
+				{
+					pAction->speed_L = 200 + ( 500 * ( gain / 5.0 ) );
+					pAction->speed_R = 200 - ( 200 * ( gain / 5.0 ) );
+				}*/
+				
+				//pAction->speed_L = 200 + ( 500 * ( 0 - difference / 5.0 ) );
+				//pAction->speed_R = 200 + ( 500 * ( difference / 5.0 ) );
+				pAction->speed_L = 200 - (500 * abs_diff / 3.5 ) * ( pSensors->left_light / 5.0 );
+				pAction->speed_R = 200 - (500 * abs_diff / 3.5 ) * ( pSensors->right_light / 5.0 );
+				
+				/*// If equal light received by both sensors...
+				if( abs(pSensors->left_light - pSensors->right_light) < 0.3 )
 				{
 					// ... Set both motors equal
 					pAction->speed_L = 200;
 					pAction->speed_R = 200;
 				}
+				// If more light received by left sensor...
+				else if( pSensors->left_light > pSensors->right_light )
+				{
+					// ... Speed up Right Motor
+					pAction->speed_L = 200;
+					pAction->speed_R = 400;
+				}
+				// If more light received by right sensor...
+				else if( pSensors->left_light < pSensors->right_light )
+				{
+					// ... Speed up Left Motor
+					pAction->speed_L = 400;
+					pAction->speed_R = 200;
+				}*/
 			} // end if()
-		}
+		} // end light_follow()
 		// -------------------------------------------- //
 		
+		void light_observe( volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pSensors )
+		{
+			float left = pSensors->left_light;
+			float right = pSensors->right_light;
+			if ( ( ( left + right ) / 2 >= 4.2 ) &&
+					left >= 3.9 && right >= 3.9 )
+			{
+				pAction->state = OBSERVING;
+				
+				// STOP!
+				STEPPER_stop( STEPPER_BOTH, STEPPER_BRK_OFF );
+				DELAY_ms(1000);
+								
+				// Back up...
+				STEPPER_move_stwt( STEPPER_BOTH,
+				STEPPER_REV, 150, 200, 400, STEPPER_BRK_OFF,
+				STEPPER_REV, 150, 200, 400, STEPPER_BRK_OFF );
+				
+				// ... and turn LEFT ~180-deg.
+				STEPPER_move_stwt( STEPPER_BOTH,
+				STEPPER_REV, 2*DEG_90, 200, 400, STEPPER_BRK_OFF,
+				STEPPER_FWD, 2*DEG_90, 200, 400, STEPPER_BRK_OFF );
+
+				// ... and set the motor action structure with variables to move forward.
+
+				pAction->speed_L = 200;
+				pAction->speed_R = 200;
+				pAction->accel_L = 400;
+				pAction->accel_R = 400;
+			}
+		} // end light_observe()
+		// -------------------------------------------- //
 		void act( volatile MOTOR_ACTION *pAction )
 		{
 
@@ -496,6 +571,8 @@ do {                                  \
 			ADC_open();		// Open ADC Module
 			STEPPER_open(); // Open the STEPPER subsyste module.
 			
+			ADC_set_VREF( ADC_VREF_AVCC );			// Set reference voltage
+			
 			// Reset the current motor action.
 			__RESET_ACTION( action );
 			
@@ -517,18 +594,23 @@ do {                                  \
 			{
 				
 				// Sense must always happen first.
-				// (IR sense happens every 125ms).
-				IR_sense( &sensor_data, 125 );
+				IR_sense( &sensor_data, 75 );
+				
+				//
+				photo_sense( &sensor_data, 100 );
 				
 				// Behaviors.
 				explore( &action );
 				
+				//
+				light_follow( &action, &sensor_data );
+				
+				//
+				light_observe( &action, &sensor_data );
+				
 				// Note that 'avoidance' relies on sensor data to determine
 				// whether or not 'avoidance' is necessary.
 				IR_avoid( &action, &sensor_data );
-				
-				//
-				light_follow( &action, &sensor_data );
 				
 				// Perform the action of highest priority.
 				act( &action );
@@ -536,7 +618,7 @@ do {                                  \
 				// Real-time display info, should happen last, if possible (
 				// except for 'ballistic' behaviors).  Technically this is sort of
 				// 'optional' as it does not constitute a 'behavior'.
-				info_display( &action );
+				info_display( &action, &sensor_data );
 				
 			} // end while()
 			
